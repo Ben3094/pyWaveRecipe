@@ -1,11 +1,14 @@
 [project]
 name = "pyWaveRecipe"
-version = "0.0.8"
+version = "0.0.10"
 requires-python = ">=3.7"
 license = {file = "LICENSE"}
 
 [tool.setuptools]
-package-data = {}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [build-system]
 requires = ["setuptools>=43.0.0", "wheel"]
