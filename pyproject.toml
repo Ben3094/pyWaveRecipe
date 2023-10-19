@@ -1,5 +1,6 @@
 [project]
 name = "pyWaveRecipe"
+version = "0.0.17"
 
 [build-system]
 requires = ["setuptools>=68.0.0", "wheel"]
