@@ -4,8 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyWaveRecipe"
-version = "0.0.21"
+version = "0.0.23"
 requires-python = ">=3.11"
-dependencies = {file = "requirements.txt"}
 readme = "README.md"
 license = {file = "LICENSE"}
