@@ -1,7 +1,11 @@
+[build-system]
+requires = ["setuptools>=68.0.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "pyWaveRecipe"
-version = "0.0.17"
-
-[build-system]
-requires = ["setuptools>=68.0.0", "wheel"]
-build-backend = "setuptools.build_meta"
+version = "0.0.21"
+requires-python = ">=3.11"
+dependencies = {file = "requirements.txt"}
+readme = "README.md"
+license = {file = "LICENSE"}
