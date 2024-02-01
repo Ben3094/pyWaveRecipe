@@ -101,9 +101,9 @@ class Component:
 			maxPowers = math.inf
 
 		dataFrame:DataFrame = read_csv(io)
-		portsNumber = math.sqrt(len(dataFrame.filter(regex="^(?:S\d{2} \(dB\))$").columns))
-		if portsNumber % 1 != 0:
-			raise Exception("Missing column")
+		portsNumber = math.sqrt(len(dataFrame.filter(regex="^(?:S\\d{2} \\(dB\\))$").columns))
+		# if portsNumber % 1 != 0:
+		# 	raise Exception("Missing column")
 		component = Component(int(portsNumber), maxPowers=maxPowers)
 		component.SMatrices = dataFrame
 

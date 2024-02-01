@@ -1,6 +1,6 @@
 from .Component import Component, FREQUENCY_HEADER
 from networkx import Graph, connected_components, shortest_path
-from numpy import any, isnan
+from numpy import any, isnan, nan
 from pandas import concat
 
 COMPONENT_PROPERTY_NAME = 'Component'
@@ -146,7 +146,7 @@ class Circuit(Graph):
 					# Reset results index as it is nor ordered anymore because of new dependencies creation and it will be needed in the next index browsing
 					result.SMatrices.reset_index(drop=True, inplace=True)
 
-					columnsToCompare = result.SMatrices.filter(regex="^(?!(?:S\d{2} \(dB\))).*$").columns
+					columnsToCompare = result.SMatrices.filter(regex="^(?!(?:S\\d{2} \\(dB\\))).*$").columns
 
 					# Browse newly created dependency to add node S-parameters
 					for index in result.SMatrices.index:
@@ -155,13 +155,18 @@ class Circuit(Graph):
 							if columnName in nodeClosestResult:
 								nodeClosestResult = nodeClosestResult.loc[nodeClosestResult[columnName] == result.SMatrices.loc[index, columnName]]
 						currentValue = float(result.SMatrices.iloc[index][newPortName])
-						toAddValue = nodeClosestResult[newPortName].values[0]
 
-						if not isnan(toAddValue):
-							if not isnan(currentValue):
-								result.SMatrices.loc[index, newPortName] = currentValue + toAddValue
-							else:
-								result.SMatrices.loc[index, newPortName] = toAddValue
+						# Check if node closest result contains value...
+						if newPortName in nodeClosestResult: 
+							toAddValue = nodeClosestResult[newPortName].values[0]
+
+							if not isnan(toAddValue):
+								if not isnan(currentValue):
+									result.SMatrices.loc[index, newPortName] = currentValue + toAddValue
+								else:
+									result.SMatrices.loc[index, newPortName] = toAddValue
+						else: # ... if not delete the result as the path is not complete
+							result.SMatrices.loc[index, newPortName] = nan
 
 		# Compute maximum power allowed for the synthetized component
 		# Max. input power equals the previous synthetized component max. input power, or the current component max. input minus gain of the previous synthetized component
