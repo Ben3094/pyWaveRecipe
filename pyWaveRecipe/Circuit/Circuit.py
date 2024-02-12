@@ -1,4 +1,4 @@
-from .Component import Component, FREQUENCY_HEADER
+from ..Component.Component import Component, FREQUENCY_HEADER
 from networkx import Graph, connected_components, shortest_path
 from numpy import any, isnan, nan
 from pandas import concat
