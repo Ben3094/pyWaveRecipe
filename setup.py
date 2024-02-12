@@ -8,7 +8,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name='pyWaveRecipe',
-    version='0.0.38',
+    version='0.0.40',
     author='Benjamin SAGGIN',
     description='Tools for storing S-parameters from electromagnetic components and combine them while preserving external dependencies of each components',
     long_description=long_description,
