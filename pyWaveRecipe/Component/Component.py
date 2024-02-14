@@ -103,10 +103,10 @@ class Component:
 
 		dataFrame:DataFrame = read_csv(io)
 
-		columns = dataFrame.filter(regex="^(?:S\\d{2} \\(dB\\))$").columns.name
+		columns = dataFrame.filter(regex="^(?:S\\d{2} \\(dB\\))$").columns
 		portsNumber = None
 		for column in columns:
-			portsNumber = max([portsNumber, max([int(indexes) for indexes in findall(GAIN_HEADER_PORT_REGEX, column)])])
+			portsNumber = max([portsNumber, max([int(indexes) for indexes in list(findall(GAIN_HEADER_PORT_REGEX, column)[0])])])
 
 		math.sqrt(len(dataFrame.filter(regex="^(?:S\\d{2} \\(dB\\))$").columns))
 		# if portsNumber % 1 != 0:
