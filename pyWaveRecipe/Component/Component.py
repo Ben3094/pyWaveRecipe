@@ -104,7 +104,7 @@ class Component:
 		dataFrame:DataFrame = read_csv(io)
 
 		columns = dataFrame.filter(regex="^(?:S\\d{2} \\(dB\\))$").columns
-		portsNumber = math.nan
+		portsNumber = 0
 		for column in columns:
 			portsNumber = max([portsNumber, max([int(indexes) for indexes in list(findall(GAIN_HEADER_PORT_REGEX, column)[0])])])
 
