@@ -7,6 +7,7 @@ from re import search, findall
 MAX_POWERS_HEADER = 'MaxPowers'
 FREQUENCY_HEADER = "Frequency (Hz)"
 GAIN_HEADER_FORMATER = "S{}{} (dB)"
+GAIN_HEADER_PORT_REGEX = "^(?:S(\\d)(\\d) \\(dB\\))$"
 
 class Component:
 	@property
@@ -101,7 +102,13 @@ class Component:
 			maxPowers = math.inf
 
 		dataFrame:DataFrame = read_csv(io)
-		portsNumber = math.sqrt(len(dataFrame.filter(regex="^(?:S\\d{2} \\(dB\\))$").columns))
+
+		columns = dataFrame.filter(regex="^(?:S\\d{2} \\(dB\\))$").columns.name
+		portsNumber = None
+		for column in columns:
+			portsNumber = max([portsNumber, max([int(indexes) for indexes in findall(GAIN_HEADER_PORT_REGEX, column)])])
+
+		math.sqrt(len(dataFrame.filter(regex="^(?:S\\d{2} \\(dB\\))$").columns))
 		# if portsNumber % 1 != 0:
 		# 	raise Exception("Missing column")
 		component = Component(int(portsNumber), maxPowers=maxPowers)
